@@ -17,5 +17,5 @@ app.use(userRouter)
 app.use(sensorRouter)
 
 app.listen(process.env.PORT || 5000,function(){
-    console.log(`listening to port ${Port}`)
+    console.log(`listening to port`)
 })
