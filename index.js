@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const userRouter= require('./route/users')
 const sensorRouter= require('./route/sensors')
 const app=express()
-const Port= process.env.port || 3000;
 //established mongoose connection
 mongoose.connect("mongodb+srv://dbUser:dbUser@cluster0.m9g2u.mongodb.net/dbUser?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
@@ -17,6 +16,6 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(userRouter)
 app.use(sensorRouter)
 
-app.listen(Port,function(){
+app.listen(process.env.PORT || 5000,function(){
     console.log(`listening to port ${Port}`)
 })
