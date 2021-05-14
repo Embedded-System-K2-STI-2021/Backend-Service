@@ -27,7 +27,7 @@
     
     // When reading the csv, I must format variables:
     function(d){
-      return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.spo2 }
+      return { date : d3.timeParse("%Y-%m-%d %H:%M:%S")(d.date), value : d.bpm }
     },
     
       // Now I can use this dataset:
