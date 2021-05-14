@@ -170,6 +170,7 @@ module.exports ={
         });
 
           console.log(data);
+          res.header('Access-Control-Allow-Origin', '*');
           res.header('Content-Type', 'text/csv');
           res.attachment(`${user.name}.csv`);
           return res.send(data);      
