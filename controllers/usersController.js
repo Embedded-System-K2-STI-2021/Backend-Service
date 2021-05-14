@@ -164,9 +164,9 @@ module.exports ={
             
         })
         console.log(user.sensorData)
-        let data="date;value\n";
+        let data="date,value\n";
         user.sensorData.forEach(el => {
-            data+=el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +";"+el.spo2+"\n"
+            data+=el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +","+el.spo2+"\n"
         });
 
           console.log(data);
