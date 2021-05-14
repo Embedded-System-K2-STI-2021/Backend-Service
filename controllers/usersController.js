@@ -164,13 +164,12 @@ module.exports ={
             
         })
         console.log(user.sensorData)
-        let data="date,value\n";
+        let data="spo2,bpm,date\n";
         user.sensorData.forEach(el => {
-            data+=el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +","+el.spo2+"\n"
+            data+=el.spo2+","+el.bpm+","+el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +"\n"
         });
 
           console.log(data);
-          res.header('Access-Control-Allow-Origin', '*');
           res.header('Content-Type', 'text/csv');
           res.attachment(`${user.name}.csv`);
           return res.send(data);      
