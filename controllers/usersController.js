@@ -3,6 +3,9 @@ const saltRounds = 10;
 const User =require('../models/users')
 const Sensor =require('../models/sensors')
 const ObjectsToCsv = require('objects-to-csv')
+const fs = require('fs');
+const stringify = require('csv-stringify');
+const { Parser } = require('json2csv');
 module.exports ={
     getpatient: async (req,res)=>{
             const result=[]
@@ -147,7 +150,7 @@ module.exports ={
       
     },
     generateCSV: async(req,res)=>{
-        const user =  await Sensor.findOne({email:req.body.email},(err,result)=>{
+        const user =  await Sensor.findOne({email:req.params.email},(err,result)=>{
             if(err){
                 res.status(400).json({
                     status: "FAILED",
@@ -160,24 +163,31 @@ module.exports ={
             
             
         })
-        console.log(user)
+        console.log(user.sensorData)
 
-        const csv = new ObjectsToCsv(user.sensorData)
-        try {
-            await csv.toDisk(`./public/${user.name}.csv`)
-            res.status(200).json({
-                status: "SUCCESS",
-                message: "user is successfully login",
-                data:`./csv/${user.name}.csv`
-            })
 
-        } catch (error) {
-            res.status(400).json({
-                status: "FAILED",
-                message: error
-            })
-        }
-        
-
+        const fields = [
+            {
+              label: '_id',
+              value: 'id'
+            },
+            {
+              label: 'spo2',
+              value: 'spo2'
+            },
+            {
+             label: 'bpm',
+              value: 'bpm'
+            },
+            {
+             label: 'date',
+              value: 'date'
+            }
+          ];
+          const json2csv = new Parser({ fields });
+          const csv = json2csv.parse(user.sensorData);
+          res.header('Content-Type', 'text/csv');
+          res.attachment(`${user.name}.csv`);
+          return res.send(csv);      
     }
 }
