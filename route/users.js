@@ -9,4 +9,5 @@ router.post('/login',userController.login)
 router.post('/observers',userController.addObserver)
 
 router.get('/observers',userController.getpatient)
+router.get('/csv',userController.generateCSV)
 module.exports =router

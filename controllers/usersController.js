@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const User =require('../models/users')
 const Sensor =require('../models/sensors')
+const ObjectsToCsv = require('objects-to-csv')
 module.exports ={
     getpatient: async (req,res)=>{
             const result=[]
@@ -144,5 +145,39 @@ module.exports ={
                 }
 
       
+    },
+    generateCSV: async(req,res)=>{
+        const user =  await Sensor.findOne({email:req.body.email},(err,result)=>{
+            if(err){
+                res.status(400).json({
+                    status: "FAILED",
+                    message: "email is not registered"
+                })
+            }
+            else{
+                return result;
+            }
+            
+            
+        })
+        console.log(user)
+
+        const csv = new ObjectsToCsv(user.sensorData)
+        try {
+            await csv.toDisk(`./${user.name}.csv`)
+            res.status(200).json({
+                status: "SUCCESS",
+                message: "user is successfully login",
+                data:`./${user.name}.csv`
+            })
+
+        } catch (error) {
+            res.status(400).json({
+                status: "FAILED",
+                message: error
+            })
+        }
+        
+
     }
 }
