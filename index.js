@@ -4,7 +4,7 @@ const userRouter= require('./route/users')
 const sensorRouter= require('./route/sensors')
 const app=express()
 //established mongoose connection
-mongoose.connect("mongodb://localhost:27017/embedded", {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect("mongodb+srv://dbUser:dbUser@cluster0.m9g2u.mongodb.net/dbUser?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

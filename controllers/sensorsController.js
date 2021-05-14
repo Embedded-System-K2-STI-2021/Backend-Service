@@ -19,7 +19,7 @@ module.exports ={
          Sensor.findOneAndUpdate(
             {email:req.body.email},
             {$push : {sensorData:sensordata}},
-             (err,result)=>{
+             (err,result)=>{ 
                 if(err){
                     res.status(400).json({
                         status: "FAILED",
