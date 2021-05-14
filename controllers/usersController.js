@@ -168,19 +168,19 @@ module.exports ={
 
         const fields = [
             {
-              label: '_id',
-              value: 'id'
+              label: 'id',
+              value: '_id'
             },
             {
-              label: 'spo2',
+              label: 'SPO2',
               value: 'spo2'
             },
             {
-             label: 'bpm',
+             label: 'BPM',
               value: 'bpm'
             },
             {
-             label: 'date',
+             label: 'Date',
               value: 'date'
             }
           ];
