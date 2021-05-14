@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const User =require('../models/users')
 const Sensor =require('../models/sensors')
 module.exports ={
@@ -26,10 +28,12 @@ module.exports ={
     addObserver:async (req,res)=>{
         const patients={
                 email:req.body.patient}
+        const observers={
+                email:req.body.email}
         
-         User.findOneAndUpdate(
-            {email:req.body.email},
-            {$push : {patients:patients}},
+        User.findOneAndUpdate(
+            {email:req.body.patient},
+            {$push : {observers:observers}},
              (err,result)=>{
                 if(err){
                     res.status(400).json({
@@ -38,20 +42,36 @@ module.exports ={
                     })
                 }
                 else{
-                    res.status(200).json({
-                        status:"SUCCESS",
-                        message:"User Successfully created",
-                        data:result
-                    })
+                    User.findOneAndUpdate(
+                        {email:req.body.email},
+                        {$push : {patients:patients}},
+                         (err,result)=>{
+                            if(err){
+                                res.status(400).json({
+                                    status: "FAILED",
+                                    message: err
+                                })
+                            }
+                            else{
+                                res.status(200).json({
+                                    status:"SUCCESS",
+                                    message:"User Successfully created",
+                                })
+                            }
+                        })
                 }
+                
             })
+         
 
     } ,
     create: async (req,res)=>{
+        const password = req.body.password;    
+        const encryptedPassword = await bcrypt.hash(password, saltRounds)
         const user =new User({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: encryptedPassword,
             status:req.body.status,
             
         })
@@ -94,6 +114,34 @@ module.exports ={
             }
             
         })
+
+      
+    },
+    login: async (req,res)=>{
+        const password = req.body.password;    
+        const user =  await User.findOne({email:req.body.email},(err,result)=>{
+            if(err){
+                res.status(400).json({
+                    status: "FAILED",
+                    message: "email is not registered"
+                })
+            }
+            
+            
+        })
+        const comparison = await bcrypt.compare(password, user.password)
+                if(!comparison){
+                    res.status(400).json({
+                        status: "FAILED",
+                        message: "email and password didn't match"
+                    })  
+                }
+                else{
+                    res.status(200).json({
+                        status: "SUCCESS",
+                        message: "user is successfully login"
+                    })
+                }
 
       
     }

@@ -21,6 +21,7 @@ const userSchema = new Schema({
         required: true
     },
     patients:[{email:String}],
+    observers:[{email:String}]
 },{timestamps:true});
 
 const User = mongoose.model('User',userSchema)
