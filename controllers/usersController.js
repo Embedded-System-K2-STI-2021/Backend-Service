@@ -164,7 +164,7 @@ module.exports ={
 
         const csv = new ObjectsToCsv(user.sensorData)
         try {
-            await csv.toDisk(`./${user.name}.csv`)
+            await csv.toDisk(`./public/${user.name}.csv`)
             res.status(200).json({
                 status: "SUCCESS",
                 message: "user is successfully login",
