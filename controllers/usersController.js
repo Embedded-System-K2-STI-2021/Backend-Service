@@ -5,7 +5,7 @@ const Sensor =require('../models/sensors')
 const ObjectsToCsv = require('objects-to-csv')
 const fs = require('fs');
 const stringify = require('csv-stringify');
-const { Parser } = require('json2csv');
+const { Parser } =require('json2csv');
 module.exports ={
     getpatient: async (req,res)=>{
             const result=[]
@@ -164,30 +164,14 @@ module.exports ={
             
         })
         console.log(user.sensorData)
+        let data="spo2;bpm;date\n";
+        user.sensorData.forEach(el => {
+            data+=el.spo2+";"+el.bpm+";"+el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +"\n"
+        });
 
-
-        const fields = [
-            {
-              label: 'id',
-              value: '_id'
-            },
-            {
-              label: 'SPO2',
-              value: 'spo2'
-            },
-            {
-             label: 'BPM',
-              value: 'bpm'
-            },
-            {
-             label: 'Date',
-              value: 'date'
-            }
-          ];
-          const json2csv = new Parser({ fields });
-          const csv = json2csv.parse(user.sensorData);
+          console.log(data);
           res.header('Content-Type', 'text/csv');
           res.attachment(`${user.name}.csv`);
-          return res.send(csv);      
+          return res.send(data);      
     }
 }
