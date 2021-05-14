@@ -164,9 +164,9 @@ module.exports ={
             
         })
         console.log(user.sensorData)
-        let data="spo2;bpm;date\n";
+        let data="date;value\n";
         user.sensorData.forEach(el => {
-            data+=el.spo2+";"+el.bpm+";"+el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +"\n"
+            data+=el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +";"+el.spo2+"\n"
         });
 
           console.log(data);
