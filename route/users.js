@@ -8,6 +8,6 @@ router.post('/login',userController.login)
 
 router.post('/observers',userController.addObserver)
 
-router.get('/observers',userController.getpatient)
+router.get('/data',userController.getpatient)
 router.get('/csv/:email',userController.generateCSV)
 module.exports =router
