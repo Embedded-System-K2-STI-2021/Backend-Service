@@ -9,7 +9,7 @@ const { Parser } =require('json2csv');
 module.exports ={
     getpatient: async (req,res)=>{
             const result=[]
-            const user =  await Sensor.findOne({email:req.body.email},(err,result)=>{
+            const user =  await Sensor.findOne({email:req.params.email},(err,result)=>{
                 if(err){
                     res.status(400).json({
                         status: "FAILED",
