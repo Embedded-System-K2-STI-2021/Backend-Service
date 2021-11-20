@@ -125,14 +125,22 @@ module.exports ={
         const password = req.body.password;    
         const user =  await User.findOne({email:req.body.email},(err,result)=>{
             if(err){
-                res.status(400).json({
+                return (res.status(400).json({
                     status: "FAILED",
                     message: "email is not registered"
-                })
+                }))
             }
             
             
         })
+        if(!user){
+            
+                return (res.status(400).json({
+                    status: "FAILED",
+                    message: "email is not registered"
+                }))
+            
+        }
         const comparison = await bcrypt.compare(password, user.password)
                 if(!comparison){
                     res.status(400).json({
@@ -143,7 +151,8 @@ module.exports ={
                 else{
                     res.status(200).json({
                         status: "SUCCESS",
-                        message: "user is successfully login"
+                        message: "user is successfully login",
+                        data:user
                     })
                 }
 
@@ -174,5 +183,34 @@ module.exports ={
           res.header('Access-Control-Allow-Origin','*');
           res.attachment(`${user.name}.csv`);
           return res.send(data);      
-    }
+    },
+    get_list_patient: async (req,res)=>{
+        const result=[]
+        console.log(req.query.email)
+        const user =  await User.findOne({email:req.query.email},(err,result)=>{
+            if(err){
+                return res.status(400).json({
+                    status: "FAILED",
+                    message: err
+                })
+            }
+            
+            
+        })
+        if(user){
+            user.patients.forEach(element => {
+                result.push(element.email)
+            });
+            return res.status(200).json({
+                status:"SUCCESS",
+                message:"User Successfully created",
+                data:result
+            })
+        }
+        return res.status(400).json({
+            status: "FAILED"
+        })
+
+
+},
 }
