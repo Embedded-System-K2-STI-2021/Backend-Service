@@ -17,10 +17,10 @@ const userSchema = new Schema({
     },
     status: {
         type :String,
-        enum: ['patient', 'observer'],
+        enum: ['room', 'observer'],
         required: true
     },
-    patients:[{email:String}],
+    rooms:[{email:String}],
     observers:[{email:String}]
 },{timestamps:true});
 

@@ -7,7 +7,7 @@ const fs = require('fs');
 const stringify = require('csv-stringify');
 const { Parser } =require('json2csv');
 module.exports ={
-    getpatient: async (req,res)=>{
+    getroom: async (req,res)=>{
             const result=[]
             const user =  await Sensor.findOne({email:req.params.email},(err,result)=>{
                 if(err){
@@ -30,13 +30,13 @@ module.exports ={
 
     },
     addObserver:async (req,res)=>{
-        const patients={
-                email:req.body.patient}
+        const rooms={
+                email:req.body.room}
         const observers={
                 email:req.body.email}
         
         User.findOneAndUpdate(
-            {email:req.body.patient},
+            {email:req.body.room},
             {$push : {observers:observers}},
              (err,result)=>{
                 if(err){
@@ -48,7 +48,7 @@ module.exports ={
                 else{
                     User.findOneAndUpdate(
                         {email:req.body.email},
-                        {$push : {patients:patients}},
+                        {$push : {rooms:rooms}},
                          (err,result)=>{
                             if(err){
                                 res.status(400).json({
@@ -80,12 +80,12 @@ module.exports ={
             
         })
         await user.save((err,result)=>{
-            if((req.body.status === "patient") && (!err)){
-                const patient = new Sensor({
+            if((req.body.status === "room") && (!err)){
+                const room = new Sensor({
                     email: req.body.email,
                     name: req.body.name
                 })
-                patient.save((err,results)=>{
+                room.save((err,results)=>{
                     if(err){
                         res.status(400).json({
                             status: "FAILED",
@@ -173,9 +173,9 @@ module.exports ={
             
         })
         console.log(user.sensorData)
-        let data="spo2,bpm,date\n";
+        let data="ppm,date\n";
         user.sensorData.forEach(el => {
-            data+=el.spo2+","+el.bpm+","+el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +"\n"
+            data+=el.ppm+","+el.date.toISOString().replace(/T/, ' ').replace(/\..+/, '') +"\n"
         });
 
           console.log(data);
@@ -184,7 +184,7 @@ module.exports ={
           res.attachment(`${user.name}.csv`);
           return res.send(data);      
     },
-    get_list_patient: async (req,res)=>{
+    get_list_room: async (req,res)=>{
         const result=[]
         console.log(req.query.email)
         const user =  await User.findOne({email:req.query.email},(err,result)=>{
@@ -198,7 +198,7 @@ module.exports ={
             
         })
         if(user){
-            user.patients.forEach(element => {
+            user.rooms.forEach(element => {
                 result.push(element.email)
             });
             return res.status(200).json({

@@ -7,7 +7,7 @@ router.route('/users')
 router.post('/login',userController.login)
 
 router.post('/observers',userController.addObserver)
-router.get('/patients',userController.get_list_patient)
-router.get('/data/:email',userController.getpatient)
+router.get('/rooms',userController.get_list_room)
+router.get('/data/:email',userController.getroom)
 router.get('/csv/:email',userController.generateCSV)
 module.exports =router

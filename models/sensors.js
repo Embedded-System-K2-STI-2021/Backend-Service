@@ -10,8 +10,8 @@ const sensorSchema = new Schema({
         type :String,
         required: true
     },
-    sensorData: [{spo2: Number,
-                    bpm:Number, date: {type: Date, default: Date.now }}]
+    sensorData: [{ppm: Number,
+                     date: {type: Date, default: Date.now }}]
 },{timestamps:true});
 
 const Sensor = mongoose.model('Sensor',sensorSchema)

@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 app.use(userRouter)
 app.use(sensorRouter)
-const port=process.env.PORT || 5000
-app.listen(process.env.PORT || 5000,function(){
+const port=process.env.PORT || 5001
+app.listen(port,function(){
     console.log(`listening to port ${port}`)
 })
