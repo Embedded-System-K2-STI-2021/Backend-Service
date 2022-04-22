@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 app.use(userRouter)
 app.use(sensorRouter)
+app.get('/', (req, res) => {
+  res.send('Welcome to K2 T3 REKSTI')
+})
 const port=process.env.PORT || 5001
 app.listen(port,function(){
     console.log(`listening to port ${port}`)
