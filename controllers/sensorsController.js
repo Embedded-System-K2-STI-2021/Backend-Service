@@ -52,7 +52,7 @@ module.exports ={
             })}}
             res.status(200).json({
                 status: "SUCCESS",
-                message: "sukses gan"
+                message: "Data successfully sent"
             })
         
       

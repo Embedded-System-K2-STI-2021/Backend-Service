@@ -19,7 +19,6 @@ module.exports ={
                 else{
                     res.status(200).json({
                         status:"SUCCESS",
-                        message:"User Successfully created",
                         data:result
                     })
                 }
@@ -59,7 +58,7 @@ module.exports ={
                             else{
                                 res.status(200).json({
                                     status:"SUCCESS",
-                                    message:"User Successfully created",
+                                    message:"User successfully added",
                                 })
                             }
                         })
@@ -111,7 +110,6 @@ module.exports ={
                 else{
                     res.status(200).json({
                         status:"SUCCESS",
-                        message:"User Successfully created",
                         data:result
                     })
                 }
@@ -203,7 +201,6 @@ module.exports ={
             });
             return res.status(200).json({
                 status:"SUCCESS",
-                message:"User Successfully created",
                 data:result
             })
         }
